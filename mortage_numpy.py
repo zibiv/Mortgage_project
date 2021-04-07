@@ -1,7 +1,7 @@
 import numpy_financial as npf
 import numpy as np
 years =  int(input("How many years do you need to pay loan? "))
-salePrice =  int(input("Purchase price: "))
+# salePrice =  int(input("Purchase price: "))
 borrowed =  int(input("Borrowed: "))
 interestRate =  float(input("Interest Rate: "))
 
