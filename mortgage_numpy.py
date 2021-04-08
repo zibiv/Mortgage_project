@@ -1,22 +1,19 @@
 import numpy_financial as npf
 import numpy as np
+
+#-->Variables
 years =  int(input("How many years do you need to pay loan? "))
-# salePrice =  int(input("Purchase price: "))
 borrowed =  int(input("Borrowed: "))
 interestRate =  float(input("Interest Rate: "))
 
 months = years * 12
-true_rate = interestRate / 12 #month's rate
+true_rate = interestRate / 12  #month's rate
 
-def paidThisMonth(interestRate, years, borrowed):
-    ptm = npf.pmt(true_rate, months, borrowed)
-    return ptm
-
-
-pmt = paidThisMonth(interestRate, years, borrowed) #высчитывает непосредственно месячный платеж
+#-->Functions
+pmt = npf.pmt(true_rate, months, borrowed) #высчитывает непосредственно месячный платеж
 # print(pmt)
 nper = npf.nper(true_rate, pmt, borrowed) #высчитывает кол-во месяцев для погашения ипотеки с заданным месячным платежем
-print(np.round(nper))
+# print(np.round(nper))
 ipmt = npf.ipmt(true_rate, np.arange(months) + 1, months, borrowed)#часть ежемесячного платежа которая приходится на выплату процентов, по месячно
 # print(ipmt)
 ppmt = npf.ppmt(true_rate, np.arange(months) + 1, months, borrowed)# часть которая приходится на выплату долга так же по месячно.
@@ -28,10 +25,13 @@ def totalSumm(total_pem):
 def totalInterest(totalSumm):
     return round((totalSumm + borrowed), 2)
 
+#-->Output
+#---->General information
 print("||||||||||||||||||||||||||||||||||||||||")
 print("Loan amout:%7.2f"%borrowed)
 print(f"Loan duration in months: {months}")
 print(f"Annunal Interest rate in percent: {interestRate*100}")
+#---->Calculations
 print("Total Monthly Payment:%7.2f"%pmt)
 print(f"Total of {months} payments: {totalSumm(pmt)}")
 print(f"Over {months} months you will spend: {totalInterest(totalSumm(pmt))} in interest")
@@ -44,5 +44,3 @@ if wantFullReport == "y":
         index = payment - 1
         borrowed = borrowed + ppmt[index]
         print(fmt.format(payment, ppmt[index], ipmt[index], borrowed))
-else:
-    pass
